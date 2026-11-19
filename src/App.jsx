@@ -60,6 +60,8 @@ const previousWork = [
 ];
 
 function PhotographyPage() {
+  const baseUrl = import.meta.env.BASE_URL;
+
   return (
     <>
       <SocialLinks isPhotographyPage />
@@ -69,7 +71,7 @@ function PhotographyPage() {
           {photographs.map((photo, index) => (
             <img
               key={photo}
-              src={`/photography/${photo}`}
+              src={`${baseUrl}photography/${photo}`}
               alt={`Photograph ${index + 1} by Natalie Dodd`}
               loading="lazy"
               decoding="async"
@@ -82,6 +84,8 @@ function PhotographyPage() {
 }
 
 function PreviousWorkPage() {
+  const baseUrl = import.meta.env.BASE_URL;
+
   return (
     <>
       <SocialLinks isPhotographyPage />
@@ -91,7 +95,7 @@ function PreviousWorkPage() {
           {previousWork.map((image, index) => (
             <img
               key={image}
-              src={`/previous-work/${image}`}
+              src={`${baseUrl}previous-work/${image}`}
               alt={`Previous work example ${index + 1}`}
               loading="lazy"
               decoding="async"
@@ -104,6 +108,8 @@ function PreviousWorkPage() {
 }
 
 function SocialLinks({ isPhotographyPage = false }) {
+  const baseUrl = import.meta.env.BASE_URL;
+
   return (
     <nav className="site-nav" aria-label="Social links and photography">
       <a
@@ -130,7 +136,11 @@ function SocialLinks({ isPhotographyPage = false }) {
       </a>
       <a
         className="camera-link"
-        href={isPhotographyPage ? "/" : "/photography/"}
+        href={
+          isPhotographyPage
+            ? baseUrl
+            : `${baseUrl}photography/`
+        }
         aria-label={isPhotographyPage ? "Portfolio home" : "Photography"}
       >
         {isPhotographyPage ? (
@@ -166,7 +176,10 @@ function SocialLinks({ isPhotographyPage = false }) {
 }
 
 export default function App() {
-  const path = window.location.pathname.replace(/\/+$/, "");
+  const basePath = import.meta.env.BASE_URL.replace(/\/+$/, "");
+  const path = window.location.pathname
+    .replace(/\/+$/, "")
+    .replace(basePath, "");
   const isPhotographyPage = path === "/photography";
   const isPreviousWorkPage = path === "/previous-work";
 
