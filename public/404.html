@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      (function () {
+        var path = window.location.pathname.replace(/\/+$/, "");
+        var route = path.split("/").pop();
+        var target =
+          window.location.hostname === "nataliedodd.github.io"
+            ? "/website/"
+            : "/";
+
+        if (route === "photography" || route === "previous-work") {
+          window.location.replace(target + "#" + route);
+        } else {
+          window.location.replace(target);
+        }
+      })();
+    </script>
+  </head>
+</html>

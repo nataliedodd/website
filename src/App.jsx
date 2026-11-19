@@ -139,7 +139,7 @@ function SocialLinks({ isPhotographyPage = false }) {
         href={
           isPhotographyPage
             ? baseUrl
-            : `${baseUrl}photography/`
+            : `${baseUrl}#photography`
         }
         aria-label={isPhotographyPage ? "Portfolio home" : "Photography"}
       >
@@ -180,8 +180,12 @@ export default function App() {
   const path = window.location.pathname
     .replace(/\/+$/, "")
     .replace(basePath, "");
-  const isPhotographyPage = path === "/photography";
-  const isPreviousWorkPage = path === "/previous-work";
+  const hash = window.location.hash.replace(/^#\/?/, "");
+  const route = hash || path;
+  const isPhotographyPage =
+    route === "photography" || path === "/photography";
+  const isPreviousWorkPage =
+    route === "previous-work" || path === "/previous-work";
 
   React.useEffect(() => {
     document.title = isPhotographyPage
