@@ -176,16 +176,34 @@ function SocialLinks({ isPhotographyPage = false }) {
 }
 
 export default function App() {
-  const basePath = import.meta.env.BASE_URL.replace(/\/+$/, "");
-  const path = window.location.pathname
-    .replace(/\/+$/, "")
-    .replace(basePath, "");
-  const hash = window.location.hash.replace(/^#\/?/, "");
-  const route = hash || path;
+  const getRoute = () => {
+    const path = window.location.pathname.replace(/\/+$/, "");
+    const hash = window.location.hash.replace(/^#\/?/, "");
+    const pathRoute = path.endsWith("/photography")
+      ? "photography"
+      : path.endsWith("/previous-work")
+        ? "previous-work"
+        : "";
+    return hash || pathRoute;
+  };
+
+  const [route, setRoute] = React.useState(getRoute);
+
+  React.useEffect(() => {
+    const updateRoute = () => setRoute(getRoute());
+    window.addEventListener("hashchange", updateRoute);
+    window.addEventListener("popstate", updateRoute);
+
+    return () => {
+      window.removeEventListener("hashchange", updateRoute);
+      window.removeEventListener("popstate", updateRoute);
+    };
+  }, []);
+
   const isPhotographyPage =
-    route === "photography" || path === "/photography";
+    route === "photography";
   const isPreviousWorkPage =
-    route === "previous-work" || path === "/previous-work";
+    route === "previous-work";
 
   React.useEffect(() => {
     document.title = isPhotographyPage
