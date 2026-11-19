@@ -1,18 +1,102 @@
 import React from "react";
 
+const photographs = [
+  "01-img_8360-copy.jpg",
+  "02-img_8345-copy.jpg",
+  "03-img_8897-copy.jpg",
+  "04-img_8546-copy.jpg",
+  "05-img_8447.jpg",
+  "06-disney07.jpg",
+  "07-image.jpeg",
+  "08-image.jpeg",
+  "09-image.jpeg",
+  "10-image.jpeg",
+  "11-img_7393.jpg",
+  "12-img_1896.jpg",
+  "13-image-asset.jpeg",
+  "14-img_7125.jpg",
+  "15-dc142549-e3b4-4aea-b882-6775717eb126.jpg",
+  "16-img_7052.jpg",
+  "17-img_9707.jpg",
+  "18-img_9779.jpg",
+  "19-img_9723.jpg",
+  "20-18160684_319065571842337_4495778921421209600_n.jpg",
+  "21-18160539_749373625240980_6392892798135173120_n.jpg",
+];
+
+const previousWork = [
+  "01-Screenshot+2022-12-16+at+16.33.01.png.webp",
+  "02-Screenshot+2022-12-16+at+17.19.13.png.webp",
+  "03-Frame+1.png.webp",
+  "04-screencapture-mypthub-net-2023-01-03-20_00_25.png.webp",
+  "05-mmp-wide-image.jpg.webp",
+  "06-mmp-big-image2.jpg.webp",
+  "07-mmp-wide-image2.jpg.webp",
+  "08-17157843_1808482209474919_5938499765394077938_o.jpg.webp",
+  "09-longhouse-emblem-black.jpg.webp",
+  "10-MMC-06-PropertyDetails-990.jpg.webp",
+  "11-asset+5.jpeg.webp",
+  "12-asset+4.jpeg-2.webp",
+  "13-asset+0.jpeg.webp",
+  "14-MMC-03-Big-650x500.jpg.webp",
+  "15-asset+4.jpeg.webp",
+  "16-CcAxm0_WEAAlML2.jpg.webp",
+  "17-CcAwZp2XIAA2RVG.jpg.webp",
+  "18-Cb2v83bUEAILOKQ.png.webp",
+  "19-brandwatchchicago-5.jpg.webp",
+  "20-08b6281fa14c8e27b28b9a6e400a88bb.jpg.webp",
+  "21-_MG_0522+copy.jpg.webp",
+  "22-_MG_0707+copy.jpg.webp",
+  "23-asset+2.jpeg.webp",
+  "24-asset+1.jpeg.webp",
+  "25-Screenshot+2023-01-03+at+20.18.02.png.webp",
+  "26-screencapture-upzelo-2022-12-19-20_44_42+copy.png.webp",
+  "27-trade-show-2.jpg.webp",
+  "28-Screen+Shot+2018-09-04+at+17.25.34.png.webp",
+  "29-_DSF7610.JPG.webp",
+  "30-_DSF7588.JPG.webp",
+  "31-_DSF7596.JPG.webp",
+  "32-_DSF7637.jpg.webp",
+];
+
 function PhotographyPage() {
   return (
     <>
       <SocialLinks isPhotographyPage />
-      <main className="holding-page photography-page">
-        <div className="message">
-          <p className="page-title">Photography</p>
-          <p className="photography-note">
-            A collection of moments, coming soon.
-          </p>
-          <a className="back-link" href="/">
-            Back to the portfolio
-          </a>
+      <main className="photography-page gallery-page">
+        <h1 className="gallery-title">Photography</h1>
+        <div className="photo-grid">
+          {photographs.map((photo, index) => (
+            <img
+              key={photo}
+              src={`/photography/${photo}`}
+              alt={`Photograph ${index + 1} by Natalie Dodd`}
+              loading="lazy"
+              decoding="async"
+            />
+          ))}
+        </div>
+      </main>
+    </>
+  );
+}
+
+function PreviousWorkPage() {
+  return (
+    <>
+      <SocialLinks isPhotographyPage />
+      <main className="previous-work-page">
+        <h1 className="previous-work-title">Previous work</h1>
+        <div className="previous-work-grid">
+          {previousWork.map((image, index) => (
+            <img
+              key={image}
+              src={`/previous-work/${image}`}
+              alt={`Previous work example ${index + 1}`}
+              loading="lazy"
+              decoding="async"
+            />
+          ))}
         </div>
       </main>
     </>
@@ -82,16 +166,24 @@ function SocialLinks({ isPhotographyPage = false }) {
 }
 
 export default function App() {
-  const isPhotographyPage = window.location.pathname.replace(/\/+$/, "") === "/photography";
+  const path = window.location.pathname.replace(/\/+$/, "");
+  const isPhotographyPage = path === "/photography";
+  const isPreviousWorkPage = path === "/previous-work";
 
   React.useEffect(() => {
     document.title = isPhotographyPage
       ? "Photography — Natalie Dodd"
+      : isPreviousWorkPage
+        ? "Previous work — Natalie Dodd"
       : "Natalie Dodd — AI Product Designer";
-  }, [isPhotographyPage]);
+  }, [isPhotographyPage, isPreviousWorkPage]);
 
   if (isPhotographyPage) {
     return <PhotographyPage />;
+  }
+
+  if (isPreviousWorkPage) {
+    return <PreviousWorkPage />;
   }
 
   return (
